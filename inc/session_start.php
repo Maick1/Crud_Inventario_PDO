@@ -1,3 +1,3 @@
 <?php
-session_name("Inventario");
-session_start();
+    session_name("INV");
+    session_start();

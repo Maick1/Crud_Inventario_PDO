@@ -1,47 +1,38 @@
-<?php
-require "./inc/session_start.php";
-?>
-
+<?php require "./inc/session_start.php"; ?>
 <!DOCTYPE html>
-<html lang="es">
+<html>
+    <head>
+        <?php include "./inc/head.php"; ?>
+    </head>
+    <body>
+        <?php
 
-<head>
-    <?php
-    include "./inc/head.php";
-    ?>
-</head>
+            if(!isset($_GET['vista']) || $_GET['vista']==""){
+                $_GET['vista']="login";
+            }
 
-<body>
 
-    <?php
-    //Comprobacion para cargar vistas
-    if (!isset($_GET['vista']) || $_GET['vista'] == "") {
-        //asigno valor por defecto
-        //Se carga dinamicamente
-        $_GET['vista'] = "login";
-    }
+            if(is_file("./vistas/".$_GET['vista'].".php") && $_GET['vista']!="login" && $_GET['vista']!="404"){
 
-    //si el valor de get coincide con una vista
-    if (
-        is_file("./vistas/" .$_GET['vista'] . ".php") &&  $_GET['vista'] != "login"
-        && $_GET['vista'] != "404"
-    ) {
-        include "./Inc/navbar.php";
+                /*== Cerrar sesion ==*/
+                if((!isset($_SESSION['id']) || $_SESSION['id']=="") || (!isset($_SESSION['usuario']) || $_SESSION['usuario']=="")){
+                    include "./vistas/logout.php";
+                    exit();
+                }
 
-        include "./vistas/" . $_GET['vista'] . ".php";
+                include "./inc/navbar.php";
 
-        include "./Inc/script.php";
-    } else {
-        if($_GET['vista']=="login"){
+                include "./vistas/".$_GET['vista'].".php";
 
-            include "./vistas/login.php";
-        }else{
-            include "./vistas/404.php";
-        }
+                include "./inc/script.php";
 
-    }
-?>
-
-</body>
-
+            }else{
+                if($_GET['vista']=="login"){
+                    include "./vistas/login.php";
+                }else{
+                    include "./vistas/404.php";
+                }
+            }
+        ?>
+    </body>
 </html>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 29-03-2024 a las 23:25:09
--- Versión del servidor: 8.0.30
--- Versión de PHP: 8.1.10
+-- Tiempo de generación: 26-02-2022 a las 00:05:46
+-- Versión del servidor: 5.7.33
+-- Versión de PHP: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,10 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `inventario`
+-- Base de datos: `pdo`
 --
-CREATE DATABASE IF NOT EXISTS `inventario` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `inventario`;
 
 -- --------------------------------------------------------
 
@@ -30,10 +28,10 @@ USE `inventario`;
 --
 
 CREATE TABLE `categoria` (
-  `categoria_id` int NOT NULL,
-  `categoria_nombre` varchar(50) NOT NULL,
-  `categoria_ubicacion` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `categoria_id` int(7) NOT NULL,
+  `categoria_nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `categoria_ubicacion` varchar(150) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -42,15 +40,15 @@ CREATE TABLE `categoria` (
 --
 
 CREATE TABLE `producto` (
-  `producto_id` int NOT NULL,
-  `producto_codigo` varchar(70) NOT NULL,
-  `producto_nombre` varchar(70) NOT NULL,
-  `producto_precio` decimal(30,0) NOT NULL,
-  `producto_stock` int NOT NULL,
-  `producto_foto` varchar(500) NOT NULL,
-  `categoria_id` int NOT NULL,
-  `usuario_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `producto_id` int(20) NOT NULL,
+  `producto_codigo` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
+  `producto_nombre` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
+  `producto_precio` decimal(30,2) NOT NULL,
+  `producto_stock` int(25) NOT NULL,
+  `producto_foto` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
+  `categoria_id` int(7) NOT NULL,
+  `usuario_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
 
@@ -59,13 +57,20 @@ CREATE TABLE `producto` (
 --
 
 CREATE TABLE `usuario` (
-  `usuario_id` int NOT NULL,
-  `usuario_nombre` varchar(40) NOT NULL,
-  `usuario_apellido` varchar(40) NOT NULL,
-  `usuario_usuario` varchar(20) NOT NULL,
-  `usuario_clave` varchar(200) NOT NULL,
-  `usuario_email` varchar(70) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `usuario_id` int(10) NOT NULL,
+  `usuario_nombre` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `usuario_apellido` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `usuario_usuario` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `usuario_clave` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `usuario_email` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_usuario`, `usuario_clave`, `usuario_email`) VALUES
+(1, 'Michael', 'Tomala', 'Admin', '$2y$10$dDMqcZyawhoByjXRbodK6uVwA4aAHV34Cq9tMQgcmPlouGaXdjlX6', 'admin@gmail.com');
 
 --
 -- Índices para tablas volcadas
@@ -99,19 +104,19 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `categoria_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `producto_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `usuario_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
